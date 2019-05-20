@@ -1,5 +1,7 @@
 package com.young.flightreservation.controllers;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +25,11 @@ public class FlightController {
 	public String findFlights(@RequestParam("from") String from, @RequestParam("to") String to,
 			@RequestParam("departureDate") @DateTimeFormat(pattern = "MM-dd-yyyyy") Date departureDate,
 			ModelMap modelMap) {
+		
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
+		String strDate = dateFormat.format(departureDate);
 
-		List<Flight> flights = flightRepository.findFlights(from, to, departureDate);
+		List<Flight> flights = flightRepository.findFlights(from, to, strDate);
 		modelMap.addAttribute("flights", flights);
 
 		return "displayFlights";
